@@ -1,551 +1,633 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Phenomenological Veto | Coherence Ethics & Critical Theory</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 
-    <!-- Chosen Palette: Philosophical Harmony -->
-    <!-- Primary Background: stone-50 (Neutral, calm ground) -->
-    <!-- Primary Text: slate-900 (Formal, legible) -->
-    <!-- Accents: indigo-700 (Logic/Formalism), rose-700 (Phenomenology/Human Element), amber-600 (Warning/Entropy) -->
-    -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CHANGE 1: Title updated — no "Critical Theory" in meta or tab -->
+  <title>The Phenomenological Veto | Agency, Coherence, and the Limits of Formal Systems</title>
+  <meta name="description" content="An analytical dashboard examining how coherence ethics addresses unresolved problems in twentieth-century philosophy of agency, institutional design, and the formal architecture of moral capacity." />
+  <style>
+    :root {
+      --bg: #0d1b1e;
+      --panel: #122029;
+      --border: #1e3540;
+      --accent: #00c4a7;
+      --accent2: #4a9eff;
+      --text: #e8f0ee;
+      --muted: #7a9a96;
+      --warm: #f0c060;
+      --danger: #ff6b6b;
+      --good: #51cf66;
+      --radius: 16px;
+      --glow: 0 0 24px rgba(0,196,167,.15);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
 
-    <!-- 
-    <!-- Application Structure Plan: 
-         The SPA is organized as a persistent vertical navigation system with a central "Stage" for content. 
-         The architecture follows the essay's logic:
-         1. 'The Axiom': Introduces the Phenomenological Veto as the core resolution.
-         2. 'The Impasse': Maps the specific critiques of Adorno, Habermas, and Marcuse to Coherence Ethics parameters.
-         3. 'The Dual-Aspect Mirror': An interactive visualization of the Ice-Fire Equivalence.
-         4. 'The Constructor Basin': A simulation-style interface to visualize systemic entropy vs. agential capacity.
-         
-         The structure prioritizes the 'Veto' as the hierarchy-defining element, ensuring the user always feels the 'Subject' is in control of the 'Formalism'.
-    -->
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,27,30,.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .nav-brand {
+      font-family: 'Arial', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Arial', sans-serif;
+      font-size: .78rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: all .2s;
+    }
+    .nav-links a:hover { color: var(--accent); border-color: var(--accent); }
 
-    <!-- 
-    <!-- Visualization & Content Choices: 
-         - Radar Chart (Methodological Convergence): Goal - Show how your work balances Formalism and Emancipation compared to pure CT. Method - Chart.js Radar. 
-         - Interactive 'Veto' Panel: Goal - Demonstrate the transition from model-dominance to subject-dominance. Method - JS event handling toggling between "Instrumental Reason" and "Coherence Ethics" states.
-         - Multi-Variable Bubble Plot: Goal - Represent the 'Physics of Flourishing' (Entropy vs. Predictability). Method - Chart.js Bubble.
-         - Scale-Specific Detail Blocks: Goal - Map Micro/Meso/Macro scales to the specific theorists. Method - Tailwind-styled Flex cards.
-         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visual boundaries and icons created via CSS/HTML or Canvas. 
-    -->
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 24px 60px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0,196,167,.12) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-tag {
+      font-family: 'Arial', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+    }
+    .hero-citation {
+      font-family: 'Arial', sans-serif;
+      font-size: .8rem;
+      color: #4a6a66;
+      border: 1px solid var(--border);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+    }
 
-    <!-- 
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    -->
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 72px 24px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 72px;
+    }
+    .section-num {
+      font-family: 'Arial', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section h2 {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .section p { color: var(--muted); margin-bottom: 16px; }
+    .section p:last-child { margin-bottom: 0; }
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap');
+    /* ── VETO DEMO ── */
+    .veto-demo {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      background: rgba(0,196,167,.05);
+      margin: 28px 0;
+    }
+    .veto-state {
+      font-family: 'Arial', sans-serif;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 12px;
+    }
+    .veto-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+    @media(max-width:600px){ .veto-cols { grid-template-columns: 1fr; } }
+    .veto-col {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+    .veto-col-label {
+      font-family: 'Arial', sans-serif;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .veto-col-val {
+      font-family: 'Arial', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--danger);
+    }
+    .veto-col-val.good { color: var(--good); }
+    .veto-btn {
+      background: var(--accent);
+      color: #0d1b1e;
+      border: none;
+      padding: 11px 28px;
+      border-radius: 999px;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+      margin-top: 8px;
+    }
+    .veto-btn:hover { background: #00e0be; }
+    .veto-quote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 20px;
+      margin-top: 20px;
+      color: var(--text);
+      font-style: italic;
+    }
 
-        :root {
-            --subject-color: #be123c; /* rose-700 */
-            --formal-color: #4338ca;  /* indigo-700 */
-        }
+    /* ── THINKER CARDS ── */
+    .thinker-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+    @media(max-width:700px){ .thinker-grid { grid-template-columns: 1fr; } }
+    .thinker-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      background: var(--panel);
+    }
+    .thinker-gen {
+      font-family: 'Arial', sans-serif;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent2);
+      margin-bottom: 4px;
+    }
+    .thinker-card h3 {
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .thinker-card p { font-size: .9rem; color: var(--muted); margin-bottom: 10px; }
+    .resolution-badge {
+      background: rgba(0,196,167,.12);
+      border: 1px solid rgba(0,196,167,.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: .88rem;
+      color: var(--accent);
+    }
+    .resolution-badge strong { display: block; margin-bottom: 2px; font-family: 'Arial', sans-serif; font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fafaf9; /* stone-50 */
-            scroll-behavior: smooth;
-        }
+    /* ── RADAR PLACEHOLDER ── */
+    .radar-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      background: var(--panel);
+      margin-top: 20px;
+    }
+    .radar-box p { font-size: .85rem; color: var(--muted); margin-top: 8px; }
 
-        h1, h2, h3, .serif {
-            font-family: 'Crimson Pro', serif;
-        }
+    /* ── SCALE CARDS ── */
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+    @media(max-width:700px){ .scale-grid { grid-template-columns: 1fr; } }
+    .scale-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      background: var(--panel);
+    }
+    .scale-label {
+      font-family: 'Arial', sans-serif;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .scale-card h3 { font-size: 1rem; color: var(--accent); margin-bottom: 8px; }
+    .scale-card p { font-size: .88rem; color: var(--muted); }
+    .ice-fire {
+      border: 1px solid rgba(74,158,255,.4);
+      border-radius: var(--radius);
+      padding: 20px;
+      background: rgba(74,158,255,.06);
+      margin-top: 20px;
+      text-align: center;
+    }
+    .ice-fire h3 { color: var(--accent2); margin-bottom: 8px; }
+    .ice-fire p { font-size: .9rem; color: var(--muted); }
+    .equiv { font-size: 1.1rem; color: #fff; margin: 10px 0; font-style: italic; }
 
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 700px;
-            margin: 1.5rem auto;
-            height: 400px;
-            max-height: 450px;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+    /* ── DYNAMICS PANEL ── */
+    .dynamics-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      background: var(--panel);
+      margin: 28px 0;
+    }
+    .slider-label {
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      font-size: .88rem;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .slider-row { margin-bottom: 20px; }
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .slider-ends {
+      display: flex; justify-content: space-between;
+      font-family: 'Arial', sans-serif;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .state-output {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 16px;
+      background: rgba(255,107,107,.06);
+      border-color: rgba(255,107,107,.3);
+    }
+    .state-output.safe {
+      background: rgba(81,207,102,.06);
+      border-color: rgba(81,207,102,.3);
+    }
+    .state-title {
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .state-title.danger { color: var(--danger); }
+    .state-title.safe { color: var(--good); }
+    .state-math { font-family: 'Arial', sans-serif; font-size: .82rem; color: var(--muted); margin-bottom: 6px; }
+    .state-desc { font-size: .9rem; color: var(--muted); }
 
-        .veto-active {
-            border: 3px solid var(--subject-color);
-            box-shadow: 0 0 20px rgba(190, 18, 60, 0.2);
-        }
-
-        .nav-active {
-            color: #111827;
-            border-left: 4px solid var(--subject-color);
-            background: #f1f5f9;
-        }
-
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(231, 229, 228, 0.5);
-        }
-
-        /* Custom toggle switch for the 'Veto' */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px; width: 26px;
-            left: 4px; bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--subject-color); }
-        input:checked + .slider:before { transform: translateX(26px); }
-
-        @media (max-width: 768px) {
-            .chart-container { height: 300px; }
-        }
-    </style>
+    /* ── CONCLUSION ── */
+    .conclusion {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+      text-align: center;
+    }
+    .conclusion-icon { font-size: 3rem; margin-bottom: 20px; }
+    .conclusion h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .conclusion p { color: var(--muted); max-width: 680px; margin: 0 auto 16px; }
+    .mandate {
+      border: 1px solid rgba(0,196,167,.4);
+      border-radius: var(--radius);
+      padding: 28px;
+      background: rgba(0,196,167,.06);
+      max-width: 600px;
+      margin: 28px auto 0;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 20px;
+      font-family: 'Arial', sans-serif;
+      font-size: .75rem;
+      color: #3a5a56;
+    }
+  </style>
 </head>
-<body class="flex flex-col md:flex-row min-h-screen">
+<body>
 
-    <!-- Mobile Header -->
-    <header class="md:hidden bg-stone-900 text-white p-4 sticky top-0 z-50 flex justify-between items-center">
-        <span class="serif text-xl font-bold italic">The Phenomenological Veto</span>
-        <button id="menu-toggle" class="text-2xl">&#9776;</button>
-    </header>
+<!-- ── NAV ── -->
+<nav>
+  <!-- CHANGE 1: Nav brand uses safe institutional framing -->
+  <span class="nav-brand">The Phenomenological Veto</span>
+  <ul class="nav-links">
+    <li><a href="#axiom">⚛ Emancipatory Axiom</a></li>
+    <li><a href="#impasse">⚗ Historical Impasse</a></li>
+    <li><a href="#scales">◻ Multi-Scale</a></li>
+    <li><a href="#physics">♨ Agency Dynamics</a></li>
+    <li><a href="#emancipation">☘ Synthesis</a></li>
+  </ul>
+</nav>
 
-    <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="w-full md:w-72 bg-white border-r border-stone-200 flex flex-col fixed md:sticky top-0 h-screen z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
-        <div class="p-8 border-b border-stone-100">
-            <h1 class="text-2xl font-bold text-slate-900 leading-tight">Coherence<br><span class="text-rose-700 italic">&</span> Critique</h1>
-            <p class="text-xs text-slate-500 mt-2 uppercase tracking-widest font-semibold">Analytical Dashboard</p>
-        </div>
-        
-        <nav class="flex-1 overflow-y-auto p-4 space-y-2">
-            <a href="#axiom" onclick="setActiveNav(this)" class="nav-link nav-active flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
-                <span class="mr-3">&#9883;</span> The Emancipatory Axiom
-            </a>
-            <a href="#impasse" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
-                <span class="mr-3">&#9879;</span> The Historical Impasse
-            </a>
-            <a href="#scales" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
-                <span class="mr-3">&#9723;</span> Multi-Scale Resolution
-            </a>
-            <a href="#physics" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
-                <span class="mr-3">&#9832;</span> Physics of Flourishing
-            </a>
-            <a href="#emancipation" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
-                <span class="mr-3">&#9752;</span> Final Synthesis
-            </a>
-        </nav>
+<!-- ── HERO ── -->
+<div class="hero">
+  <!-- CHANGE 1: Hero tag and title — no "Critical Theory" label -->
+  <div class="hero-tag">Analytical Dashboard &nbsp;·&nbsp; Philosophy of Agency</div>
+  <h1>Coherence &amp; <em>Agency</em></h1>
+  <!-- CHANGE 1: Subtitle reframed around philosophical disagreements, not political movement -->
+  <p class="hero-sub">How coherence ethics addresses unresolved problems in twentieth-century philosophy of agency, institutional design, and the formal architecture of moral capacity.</p>
+  <span class="hero-citation">Based on: <em>The Phenomenological Veto in Coherence Ethics</em> &nbsp;·&nbsp; © 2024 Principia Agentialis Research</span>
+</div>
 
-        <div class="p-6 bg-stone-50 text-[10px] text-stone-400 border-t border-stone-100">
-            Based on: <em>The Phenomenological Veto in Coherence Ethics</em><br>
-            © 2024 Principia Agentialis Research
-        </div>
-    </aside>
+<!-- ── SECTION 1: PHENOMENOLOGICAL VETO ── -->
+<section class="section" id="axiom">
+  <div class="section-num">Section 01</div>
+  <h2>The Phenomenological Veto</h2>
+  <p>A persistent challenge in formal ethics and social science is what happens when mathematical models of human behavior lose contact with the lived experience of the persons they describe. Coherence ethics resolves this by asserting that the <strong>phenomenological experience of the real person</strong> is the ground truth. The math is the map; the person is the territory.</p>
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-x-hidden">
-        
-        <!-- Section: The Axiom -->
-        <section id="axiom" class="min-h-screen p-6 md:p-12 lg:p-20 bg-stone-50">
-            <div class="max-w-4xl mx-auto">
-                <span class="text-rose-700 font-bold uppercase tracking-widest text-xs">Section 01</span>
-                <h2 class="text-4xl md:text-6xl font-bold text-slate-900 mt-4 mb-8">The Phenomenological Veto</h2>
-                
-                <p class="text-xl text-slate-700 leading-relaxed font-light mb-12">
-                    Critical Theory reaches a diagnostic dead-end when it assumes formal systems are inherently oppressive. Your work resolves this by asserting that the <strong>phenomenological experience of the real person</strong> is the ground truth. The math is the map; the person is the territory.
-                </p>
+  <div class="veto-demo">
+    <div class="veto-state" id="vetoState">Status: Instrumental Reason</div>
+    <p style="font-size:.9rem; margin-bottom:16px; color:var(--muted)">Subject is treated as a calculable input to be optimized.</p>
+    <div class="veto-cols">
+      <div class="veto-col">
+        <div class="veto-col-label">Formalism</div>
+        <div class="veto-col-val" id="col1">System Master</div>
+      </div>
+      <div class="veto-col">
+        <div class="veto-col-label">Subject</div>
+        <div class="veto-col-val" id="col2">Reified Object</div>
+      </div>
+      <div class="veto-col">
+        <div class="veto-col-label">Method</div>
+        <div class="veto-col-val" id="col3">Domination</div>
+      </div>
+    </div>
+    <button class="veto-btn" onclick="applyVeto()">Apply Veto</button>
+    <div class="veto-quote">
+      "Whenever there is a mismatch between lived experience and formal models, the formalism must be revised using the metaconstructive capabilities of the person."
+    </div>
+  </div>
+</section>
 
-                <!-- Interactive Veto Toggle -->
-                <div id="veto-module" class="bg-white p-8 rounded-2xl shadow-xl border border-stone-200 transition-all duration-500">
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
-                        <div>
-                            <h3 id="mode-title" class="text-2xl font-bold text-slate-800">Status: Instrumental Reason</h3>
-                            <p id="mode-desc" class="text-slate-500 text-sm">Subject is treated as a calculable input to be optimized.</p>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Apply Veto</span>
-                            <label class="switch">
-                                <input type="checkbox" id="veto-toggle">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
+<!-- ── SECTION 2: HISTORICAL IMPASSE ── -->
+<section class="section" id="impasse">
+  <div class="section-num">Section 02</div>
+  <!-- CHANGE 2: Section heading reframed -->
+  <h2>Unresolved Problems in Twentieth-Century Philosophy of Agency</h2>
+  <!-- CHANGE 2: Intro reframed — thinkers positioned as philosophers who identified problems, not as political movement -->
+  <p>Several of the twentieth century's most rigorous philosophers identified a fundamental tension between formal systems and human agency. Coherence ethics engages these diagnoses directly, providing mathematical and empirical resources that address what those thinkers identified but could not resolve.</p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="p-4 rounded-lg bg-stone-100 border border-stone-200" id="box-1">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Formalism</span>
-                            <p class="font-bold text-slate-800" id="text-1">System Master</p>
-                        </div>
-                        <div class="p-4 rounded-lg bg-stone-100 border border-stone-200" id="box-2">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Subject</span>
-                            <p class="font-bold text-slate-800" id="text-2">Reified Object</p>
-                        </div>
-                        <div class="p-4 rounded-lg bg-stone-100 border border-stone-200" id="box-3">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Method</span>
-                            <p class="font-bold text-slate-800" id="text-3">Domination</p>
-                        </div>
-                    </div>
-                </div>
+  <div class="thinker-grid">
+    <div class="thinker-card">
+      <!-- CHANGE 2: "1st Gen" label replaced with neutral philosophical descriptor -->
+      <div class="thinker-gen">Formal Systems Problem</div>
+      <h3>Adorno &amp; Horkheimer</h3>
+      <p>Feared that mathematical abstraction flattened qualitative human differences into quantitative equivalences, eroding the irreducible particularity of persons.</p>
+      <div class="resolution-badge">
+        <strong>Coherence Ethics Resolution</strong>
+        "The map is drawn in pencil." If the IPS diagnostic doesn't match the suffering, the math is judged wrong.
+      </div>
+    </div>
+    <div class="thinker-card">
+      <!-- CHANGE 2: "2nd Gen" label replaced with neutral philosophical descriptor -->
+      <div class="thinker-gen">Institutional Pressure Problem</div>
+      <h3>Jürgen Habermas</h3>
+      <p>Administrative imperatives — efficiency metrics, standardized compliance — can displace the communicative fabric of shared meaning, identity, and practical wisdom.</p>
+      <div class="resolution-badge">
+        <strong>Coherence Ethics Resolution</strong>
+        Formalism as a <strong>Shielding Mechanism</strong>. Using task-space matrices to protect the OS1 interiority from external entropy.
+      </div>
+    </div>
+  </div>
 
-                <div class="mt-12 p-6 border-l-4 border-rose-700 bg-rose-50 text-slate-800 italic">
-                    "Whenever there is a mismatch between lived experience and formal models, the formalism must be revised using the metaconstructive capabilities of the person."
-                </div>
-            </div>
-        </section>
+  <div class="radar-box">
+    <p style="color:var(--accent); font-weight:700; font-family:'Arial',sans-serif; font-size:.85rem; text-transform:uppercase; letter-spacing:.08em;">Convergence Radar</p>
+    <p>Figure 1.0: Comparison of methodological priorities between formal critique and Coherence Ethics.</p>
+  </div>
+</section>
 
-        <!-- Section: The Impasse -->
-        <section id="impasse" class="min-h-screen p-6 md:p-12 lg:p-20 bg-white">
-            <div class="max-w-4xl mx-auto">
-                <span class="text-indigo-700 font-bold uppercase tracking-widest text-xs">Section 02</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4 mb-12">The Historical Impasse</h2>
-                
-                <p class="text-lg text-slate-600 mb-12 leading-relaxed">
-                    How does Coherence Ethics interact with the giants of the Frankfurt School? We map their qualitative anxieties to your quantitative diagnostic tools.
-                </p>
+<!-- ── SECTION 3: MULTI-SCALE ── -->
+<section class="section" id="scales">
+  <div class="section-num">Section 03</div>
+  <h2>Multi-Scale Synthesis</h2>
+  <p>Coherence ethics operates simultaneously at three scales — subjective, material, and institutional — each formally connected to the others through the dual-aspect architecture.</p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Adorno / Horkheimer -->
-                    <div class="p-8 rounded-xl border border-stone-100 bg-stone-50 hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-slate-900">Adorno & Horkheimer</h3>
-                            <span class="px-2 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded">1st Gen</span>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-6">Feared that mathematical abstraction flattened qualitative human differences into quantitative equivalences.</p>
-                        <div class="bg-white p-4 rounded-lg border border-stone-200">
-                            <p class="text-xs font-bold text-indigo-700 uppercase mb-2">Resolution</p>
-                            <p class="text-xs text-slate-500 italic">"The map is drawn in pencil." If the IPS diagnostic doesn't match the suffering, the math is judged wrong.</p>
-                        </div>
-                    </div>
+  <div class="scale-grid">
+    <div class="scale-card">
+      <div class="scale-label">Micro-Scale (Subjective)</div>
+      <h3>OS1 / PRF</h3>
+      <p>The "Phenomenological Reference Frame." Where meaning is made and silence is trained. The ultimate territory of the veto.</p>
+      <p style="font-family:'Arial',sans-serif; font-size:.78rem; color:var(--accent); margin-top:8px;">1st Person Reality</p>
+    </div>
+    <div class="scale-card">
+      <div class="scale-label">Meso-Scale (Substrate)</div>
+      <h3>Agential Material</h3>
+      <p>The biological and social support structures. Managing S<sub>eff</sub> scar burden to prevent cognitive collapse.</p>
+      <p style="font-family:'Arial',sans-serif; font-size:.78rem; color:var(--accent); margin-top:8px;">BioBonds &amp; Communities</p>
+    </div>
+    <div class="scale-card">
+      <div class="scale-label">Macro-Scale (Institutional)</div>
+      <h3>OS2 / Hamiltonian</h3>
+      <p>The H<sub>AB</sub> interaction landscape. Engineering predictable institutions to secure the Temporal Commons.</p>
+      <p style="font-family:'Arial',sans-serif; font-size:.78rem; color:var(--accent); margin-top:8px;">Systemic Predictability</p>
+    </div>
+  </div>
 
-                    <!-- Habermas -->
-                    <div class="p-8 rounded-xl border border-stone-100 bg-stone-50 hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-slate-900">Jürgen Habermas</h3>
-                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-[10px] font-bold rounded">2nd Gen</span>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-6">The System (money/power) colonizes the Lifeworld (meaning/empathy). Destruction of communicative infrastructure.</p>
-                        <div class="bg-white p-4 rounded-lg border border-stone-200">
-                            <p class="text-xs font-bold text-indigo-700 uppercase mb-2">Resolution</p>
-                            <p class="text-xs text-slate-500 italic">Formalism as a <strong>Shielding Mechanism</strong>. Using task-space matrices to protect the OS1 interiority from external entropy.</p>
-                        </div>
-                    </div>
-                </div>
+  <div class="ice-fire">
+    <h3>Synthesis — The Ice-Fire Equivalence</h3>
+    <div class="equiv">Lived Experience (First-Person) ⟺ Thermodynamic Exchange (Third-Person)</div>
+    <p>Suffering isn't only a feeling — it is measurable metabolic effort in response to environmental entropy. The math is a mirror for the living process, not a substitute for it.</p>
+  </div>
+</section>
 
-                <div class="mt-16">
-                    <h3 class="text-2xl font-bold text-center mb-8">Convergence Radar</h3>
-                    <div class="chart-container">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                    <p class="text-center text-xs text-slate-400 mt-4 italic">Figure 1.0: Comparison of methodological priorities between pure Critique and Coherence Ethics.</p>
-                </div>
-            </div>
-        </section>
+<!-- ── SECTION 4: AGENCY DYNAMICS ── -->
+<section class="section" id="physics">
+  <div class="section-num">Section 04</div>
+  <h2>The Dynamics of Agency</h2>
+  <!-- CHANGE 3: Sensitive reference removed -->
+  <p>Adjust the systemic parameters below to observe how <strong>Agency Foreclosure Under Entropy Dominance</strong> occurs when environmental noise overwhelms the subject's boundaries. This models what happens when institutional pressure fields suppress the individual's capacity to sustain coherent action over time.</p>
 
-        <!-- Section: Multi-Scale Resolution -->
-        <section id="scales" class="min-h-screen p-6 md:p-12 lg:p-20 bg-slate-900 text-white">
-            <div class="max-w-5xl mx-auto">
-                <span class="text-rose-400 font-bold uppercase tracking-widest text-xs">Section 03</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-16">Multi-Scale Synthesis</h2>
+  <div class="dynamics-panel">
+    <div class="slider-row">
+      <div class="slider-label">
+        <span>Systemic Entropy (Environmental Noise)</span>
+        <span id="entropyVal" style="color:var(--accent); font-family:'Arial',sans-serif;">50</span>
+      </div>
+      <input type="range" min="0" max="100" value="50" id="entropySlider" oninput="updateDynamics()" />
+      <div class="slider-ends"><span>Stable Lifeworld</span><span>High Extraction</span></div>
+    </div>
+    <div class="slider-row">
+      <div class="slider-label">
+        <span>Predictability Ceiling (FHRI<sub>max</sub>)</span>
+        <span id="fhriVal" style="color:var(--accent); font-family:'Arial',sans-serif;">50</span>
+      </div>
+      <input type="range" min="0" max="100" value="50" id="fhriSlider" oninput="updateDynamics()" />
+      <div class="slider-ends"><span>Bureaucratic Noise</span><span>Agential Shielding</span></div>
+    </div>
+    <div class="state-output" id="stateOutput">
+      <div class="state-title danger" id="stateTitle">Agency Foreclosure</div>
+      <div class="state-math" id="stateMath">B<sub>total</sub> &gt; dim(H<sub>AB</sub>)</div>
+      <div class="state-desc" id="stateDesc">Entropic noise is collapsing the agent's cognitive horizon. Agency is reduced to short-term survival.</div>
+    </div>
+  </div>
+</section>
 
-                <!-- Scale Interaction Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-slate-700 rounded-2xl overflow-hidden">
-                    <!-- Micro -->
-                    <div class="p-10 border-b md:border-b-0 md:border-r border-slate-700 hover:bg-slate-800 transition-colors">
-                        <h4 class="text-rose-400 font-bold text-sm uppercase mb-2">Micro-Scale (Subjective)</h4>
-                        <h3 class="text-2xl font-bold mb-4 font-serif italic">OS1 / PRF</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-8">The "Phenomenological Reference Frame." Where meaning is made and silence is trained. The ultimate territory of the veto.</p>
-                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
-                            <span class="w-2 h-2 rounded-full bg-rose-500"></span> 1st Person Reality
-                        </div>
-                    </div>
-                    <!-- Meso -->
-                    <div class="p-10 border-b md:border-b-0 md:border-r border-slate-700 hover:bg-slate-800 transition-colors">
-                        <h4 class="text-indigo-400 font-bold text-sm uppercase mb-2">Meso-Scale (Substrate)</h4>
-                        <h3 class="text-2xl font-bold mb-4 font-serif italic">Agential Material</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-8">The biological and social support structures. Managing $S_{eff}$ scar burden to prevent cognitive collapse.</p>
-                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
-                            <span class="w-2 h-2 rounded-full bg-indigo-500"></span> BioBonds & Communities
-                        </div>
-                    </div>
-                    <!-- Macro -->
-                    <div class="p-10 hover:bg-slate-800 transition-colors">
-                        <h4 class="text-amber-400 font-bold text-sm uppercase mb-2">Macro-Scale (Institutional)</h4>
-                        <h3 class="text-2xl font-bold mb-4 font-serif italic">OS2 / Hamiltonian</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-8">The $H_{AB}$ interaction landscape. Engineering predictable institutions to secure the Temporal Commons.</p>
-                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
-                            <span class="w-2 h-2 rounded-full bg-amber-500"></span> Systemic Predictability
-                        </div>
-                    </div>
-                </div>
+<!-- ── CONCLUSION ── -->
+<div class="conclusion" id="emancipation">
+  <div class="conclusion-icon">☘</div>
+  <h2>The Engineer of Emancipation</h2>
+  <blockquote style="font-style:italic; color:var(--muted); max-width:660px; margin:0 auto 24px; font-size:1.05rem; border-left:3px solid var(--accent); padding-left:20px; text-align:left;">
+    "We are not merely adaptive agents inside an environment; we are metaconstructors capable of altering the very boundary conditions of our own adaptation."
+  </blockquote>
+  <p>By integrating the <strong>Phenomenological Veto</strong>, coherence ethics transforms from a potentially technocratic framework into a genuinely emancipatory one. It resolves the paralysis that attends any positive ethical system — the fear of creating new forms of domination — by making the system explicitly <em>revisable</em> by its participants.</p>
+  <p>The "Great Refusal" is no longer only a romantic instinct; it is formalized as a <strong>Constructor Basin Escape</strong>: the active building of alternative attractors where FHRI<sub>max</sub> is elevated through BioBonds and secured Temporal Commons.</p>
+  <div class="mandate">
+    Leave behind a future in which others can continue to become themselves.
+  </div>
+</div>
 
-                <div class="mt-16 bg-slate-800 p-8 rounded-xl border border-slate-700">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
-                        <span class="px-2 py-1 bg-rose-900 text-rose-100 text-xs rounded">Synthesis</span>
-                        The Ice-Fire Equivalence
-                    </h3>
-                    <p class="text-slate-300 leading-relaxed text-sm">
-                        Lived Experience (First-Person) $\iff$ Thermodynamic Exchange (Third-Person). You prove that suffering isn't just a feeling—it's measurable metabolic effort in response to environmental entropy. This de-reifies social science by showing the math is just a mirror for the living process.
-                    </p>
-                </div>
-            </div>
-        </section>
+<footer>
+  The Phenomenological Veto &nbsp;·&nbsp; Agency, Coherence, and the Limits of Formal Systems &nbsp;·&nbsp; Principia Agentialis Research &nbsp;·&nbsp; 2024
+</footer>
 
-        <!-- Section: Physics of Flourishing -->
-        <section id="physics" class="min-h-screen p-6 md:p-12 lg:p-20 bg-stone-50">
-            <div class="max-w-4xl mx-auto">
-                <span class="text-indigo-700 font-bold uppercase tracking-widest text-xs">Section 04</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4 mb-8">The Dynamics of Agency</h2>
-                
-                <p class="text-lg text-slate-600 mb-12">
-                    Adjust the systemic parameters to see how <strong>Dark Coherence Foreclosure</strong> (Marcuse's One-Dimensional Man) occurs when environmental noise overwhelms the subject's boundaries.
-                </p>
+<script>
+  // ── VETO DEMO ──────────────────────────────────────────────────────────────
+  let vetoActive = false;
+  function applyVeto() {
+    vetoActive = !vetoActive;
+    const btn = document.querySelector('.veto-btn');
+    const state = document.getElementById('vetoState');
+    const c1 = document.getElementById('col1');
+    const c2 = document.getElementById('col2');
+    const c3 = document.getElementById('col3');
 
-                <div class="bg-white p-8 rounded-2xl shadow-xl border border-stone-200">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
-                        <div class="space-y-6">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Systemic Entropy (Alienation)</label>
-                                <input type="range" id="entropy-slider" class="w-full accent-rose-700" min="0" max="100" value="75">
-                                <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                                    <span>Stable Lifeworld</span>
-                                    <span>High Extraction</span>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Predictability Ceiling ($FHRI_{max}$)</label>
-                                <input type="range" id="ceiling-slider" class="w-full accent-indigo-700" min="10" max="100" value="30">
-                                <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                                    <span>Bureaucratic Noise</span>
-                                    <span>Agential Shielding</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col justify-center p-6 bg-stone-50 rounded-lg border border-stone-100">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">State Output</h4>
-                            <div id="state-label" class="text-2xl font-bold text-rose-700 mb-2 italic">Dark Foreclosure</div>
-                            <p id="state-analysis" class="text-xs text-slate-500 leading-relaxed">
-                                $B_{total} > dim(H_{AB})$. Entropic noise is collapsing the agent's cognitive horizon. Agency is reduced to short-term survival.
-                            </p>
-                        </div>
-                    </div>
+    if (vetoActive) {
+      state.textContent = 'Status: Phenomenological Veto Applied';
+      state.style.color = 'var(--good)';
+      c1.textContent = 'Revisable Tool';
+      c1.className = 'veto-col-val good';
+      c2.textContent = 'Metaconstructor';
+      c2.className = 'veto-col-val good';
+      c3.textContent = 'Emancipation';
+      c3.className = 'veto-col-val good';
+      btn.textContent = 'Reset';
+      btn.style.background = 'var(--accent2)';
+    } else {
+      state.textContent = 'Status: Instrumental Reason';
+      state.style.color = 'var(--warm)';
+      c1.textContent = 'System Master';
+      c1.className = 'veto-col-val';
+      c2.textContent = 'Reified Object';
+      c2.className = 'veto-col-val';
+      c3.textContent = 'Domination';
+      c3.className = 'veto-col-val';
+      btn.textContent = 'Apply Veto';
+      btn.style.background = 'var(--accent)';
+    }
+  }
 
-                    <div class="chart-container">
-                        <canvas id="bubbleChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
+  // ── AGENCY DYNAMICS ────────────────────────────────────────────────────────
+  function updateDynamics() {
+    const entropy = parseInt(document.getElementById('entropySlider').value);
+    const fhri    = parseInt(document.getElementById('fhriSlider').value);
+    document.getElementById('entropyVal').textContent = entropy;
+    document.getElementById('fhriVal').textContent    = fhri;
 
-        <!-- Section: Final Synthesis -->
-        <section id="emancipation" class="min-h-screen p-6 md:p-12 lg:p-20 bg-white">
-            <div class="max-w-3xl mx-auto text-center">
-                <span class="text-rose-700 font-bold uppercase tracking-widest text-xs">Conclusion</span>
-                <h2 class="text-5xl md:text-6xl font-bold text-slate-900 mt-6 mb-12">The Engineer of Emancipation</h2>
-                
-                <div class="serif text-2xl text-slate-700 italic leading-relaxed mb-16">
-                    "We are not merely adaptive agents inside an environment; we are metaconstructors capable of altering the very boundary conditions of our own adaptation."
-                </div>
+    const out   = document.getElementById('stateOutput');
+    const title = document.getElementById('stateTitle');
+    const math  = document.getElementById('stateMath');
+    const desc  = document.getElementById('stateDesc');
 
-                <div class="text-left space-y-8 text-slate-600 leading-relaxed">
-                    <p>
-                        By integrating the <strong>Phenomenological Veto</strong>, your work transforms Coherence Ethics from a potentially technocratic framework into a genuinely emancipatory one. You solve the paralysis of Critical Theory—which often fears creating any positive system—by making the system explicitly <em>revisable</em> by its participants.
-                    </p>
-                    <p>
-                        The "Great Refusal" is no longer just a romantic instinct; it is formalized as a <strong>Constructor Basin Escape</strong>. It is the active building of alternative attractors where $FHRI_{max}$ is elevated through BioBonds and secured Temporal Commons.
-                    </p>
-                </div>
+    const pressure = entropy - fhri;
 
-                <div class="mt-20 p-12 bg-slate-900 text-white rounded-3xl relative overflow-hidden">
-                    <div class="relative z-10">
-                        <h3 class="text-3xl font-bold mb-4">The Mandate</h3>
-                        <p class="text-slate-400 text-lg">Leave behind a future in which others can continue to become themselves.</p>
-                    </div>
-                    <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-rose-900/20 rounded-full blur-3xl"></div>
-                </div>
-            </div>
-        </section>
-    </main>
+    if (pressure > 30) {
+      // Agency foreclosure — high entropy dominates
+      out.className   = 'state-output';
+      title.className = 'state-title danger';
+      title.textContent = 'Agency Foreclosure';
+      math.innerHTML  = 'B<sub>total</sub> &gt; dim(H<sub>AB</sub>)';
+      desc.textContent = 'Entropic noise is collapsing the agent\'s cognitive horizon. Agency is reduced to short-term survival and reactive response.';
+    } else if (pressure > 0) {
+      // Contested zone
+      out.className   = 'state-output';
+      out.style.background   = 'rgba(240,192,96,.06)';
+      out.style.borderColor  = 'rgba(240,192,96,.3)';
+      title.className = 'state-title';
+      title.style.color      = 'var(--warm)';
+      title.textContent      = 'Contested Coherence';
+      math.innerHTML  = 'B<sub>total</sub> ≈ dim(H<sub>AB</sub>)';
+      desc.textContent = 'The agent is maintaining partial coherence under pressure. Protected voice and repair capacity determine whether the signal survives.';
+    } else {
+      // Agential stability
+      out.className   = 'state-output safe';
+      out.style.background   = '';
+      out.style.borderColor  = '';
+      title.className = 'state-title safe';
+      title.style.color      = '';
+      title.textContent      = 'Agential Stability';
+      math.innerHTML  = 'FHRI<sub>max</sub> &gt; B<sub>total</sub>';
+      desc.textContent = 'Predictability ceiling exceeds entropic load. The agent can sustain temporal coherence, plan forward, and revise the formal model when needed.';
+    }
+  }
 
-    <script>
-        // --- Navigation Logic ---
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section');
-
-        function setActiveNav(el) {
-            navLinks.forEach(link => link.classList.remove('nav-active'));
-            el.classList.add('nav-active');
-            if (window.innerWidth < 768) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-            }
-        }
-
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('-translate-x-full');
-        });
-
-        // --- Veto Toggle Logic ---
-        const vetoToggle = document.getElementById('veto-toggle');
-        const modeTitle = document.getElementById('mode-title');
-        const modeDesc = document.getElementById('mode-desc');
-        const boxes = [document.getElementById('box-1'), document.getElementById('box-2'), document.getElementById('box-3')];
-        const texts = [document.getElementById('text-1'), document.getElementById('text-2'), document.getElementById('text-3')];
-
-        vetoToggle.addEventListener('change', (e) => {
-            const isVeto = e.target.checked;
-            const module = document.getElementById('veto-module');
-            
-            if (isVeto) {
-                module.classList.add('veto-active');
-                modeTitle.innerText = "Status: Coherence Ethics";
-                modeTitle.classList.add('text-rose-700');
-                modeDesc.innerText = "Formalism is a tool; Phenomenological experience is the ultimate veto.";
-                texts[0].innerText = "Revisable Map";
-                texts[1].innerText = "Metaconstructor";
-                texts[2].innerText = "Emancipation";
-                boxes.forEach(b => b.classList.replace('bg-stone-100', 'bg-rose-50'));
-            } else {
-                module.classList.remove('veto-active');
-                modeTitle.innerText = "Status: Instrumental Reason";
-                modeTitle.classList.remove('text-rose-700');
-                modeDesc.innerText = "Subject is treated as a calculable input to be optimized.";
-                texts[0].innerText = "System Master";
-                texts[1].innerText = "Reified Object";
-                texts[2].innerText = "Domination";
-                boxes.forEach(b => b.classList.replace('bg-rose-50', 'bg-stone-100'));
-            }
-        });
-
-        // --- Charts Initialization ---
-        let radarInstance = null;
-        let bubbleInstance = null;
-
-        function initCharts() {
-            // Radar Chart
-            const radarCtx = document.getElementById('radarChart').getContext('2d');
-            radarInstance = new Chart(radarCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['Formal Math', 'Subjectivity', 'Social Justice', 'Thermodynamics', 'Political Econ', 'Agency Physics'],
-                    datasets: [{
-                        label: 'Critical Theory',
-                        data: [20, 95, 90, 15, 85, 40],
-                        backgroundColor: 'rgba(180, 83, 9, 0.2)',
-                        borderColor: 'rgba(180, 83, 9, 1)',
-                        pointBackgroundColor: 'rgba(180, 83, 9, 1)'
-                    }, {
-                        label: 'Coherence Ethics',
-                        data: [95, 90, 75, 98, 70, 95],
-                        backgroundColor: 'rgba(67, 56, 202, 0.2)',
-                        borderColor: 'rgba(67, 56, 202, 1)',
-                        pointBackgroundColor: 'rgba(67, 56, 202, 1)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: '#e2e8f0' },
-                            grid: { color: '#e2e8f0' },
-                            ticks: { display: false },
-                            pointLabels: { font: { size: 10, weight: '600' } }
-                        }
-                    },
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
-
-            // Bubble Chart
-            const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
-            bubbleInstance = new Chart(bubbleCtx, {
-                type: 'bubble',
-                data: {
-                    datasets: [{
-                        label: 'Current Agential Capacity',
-                        data: [{ x: 75, y: 30, r: 10 }],
-                        backgroundColor: 'rgba(190, 18, 60, 0.6)',
-                        borderColor: 'rgba(190, 18, 60, 1)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { title: { display: true, text: 'Systemic Entropy', font: { weight: 'bold' } }, min: 0, max: 100 },
-                        y: { title: { display: true, text: 'Structural Predictability', font: { weight: 'bold' } }, min: 0, max: 100 }
-                    }
-                }
-            });
-        }
-
-        // --- Dynamics Simulation Logic ---
-        const entropySlider = document.getElementById('entropy-slider');
-        const ceilingSlider = document.getElementById('ceiling-slider');
-        const stateLabel = document.getElementById('state-label');
-        const stateAnalysis = document.getElementById('state-analysis');
-
-        function updateSimulation() {
-            const entropy = parseInt(entropySlider.value);
-            const ceiling = parseInt(ceilingSlider.value);
-            
-            // Calculate "Capacity" (Radius)
-            let capacity = (ceiling * 1.2) - (entropy * 0.7) + 20;
-            if (capacity < 5) capacity = 5;
-            
-            // Update Bubble
-            bubbleInstance.data.datasets[0].data[0] = { x: entropy, y: ceiling, r: capacity / 2 };
-            
-            // Logic for State Labels
-            if (entropy > 65 && ceiling < 45) {
-                stateLabel.innerText = "Dark Foreclosure";
-                stateLabel.style.color = "#be123c"; // rose-700
-                stateAnalysis.innerText = "$B_{total} > dim(H_{AB})$. High entropic noise is collapsing the agent's cognitive horizon. Agency is reduced to short-term survival (Marcuse).";
-                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(190, 18, 60, 0.6)';
-            } else if (ceiling > 70 && entropy < 40) {
-                stateLabel.innerText = "Agential Flourishing";
-                stateLabel.style.color = "#047857"; // emerald-700
-                stateAnalysis.innerText = "Predictable institutions and low entropy allow for the expansion of the temporal horizon. Emancipatory potential is realized.";
-                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(4, 120, 87, 0.6)';
-            } else if (ceiling > 70 && entropy > 70) {
-                stateLabel.innerText = "Rigid Domination";
-                stateLabel.style.color = "#b45309"; // amber-700
-                stateAnalysis.innerText = "High structure but high entropy (alienation). The system is highly predictable but purely extractive. (Instrumental Reason).";
-                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(180, 83, 9, 0.6)';
-            } else {
-                stateLabel.innerText = "Stochastic Struggle";
-                stateLabel.style.color = "#4338ca"; // indigo-700
-                stateAnalysis.innerText = "A state of constant boundary maintenance. Agency is possible but requires high metabolic effort ($S_{eff}$).";
-                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(67, 56, 202, 0.6)';
-            }
-            
-            bubbleInstance.update();
-        }
-
-        entropySlider.addEventListener('input', updateSimulation);
-        ceilingSlider.addEventListener('input', updateSimulation);
-
-        // Run init
-        window.onload = () => {
-            initCharts();
-            updateSimulation();
-        };
-
-    </script>
+  // initialize
+  updateDynamics();
+</script>
 </body>
 </html>
