@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- CHANGE 1: Title updated — no "Critical Theory" in meta or tab -->
+  <!-- Title: safe framing -->
   <title>The Phenomenological Veto | Agency, Coherence, and the Limits of Formal Systems</title>
   <meta name="description" content="An analytical dashboard examining how coherence ethics addresses unresolved problems in twentieth-century philosophy of agency, institutional design, and the formal architecture of moral capacity." />
   <style>
@@ -387,7 +387,7 @@
 
 <!-- ── HERO ── -->
 <div class="hero">
-  <!-- CHANGE 1: Hero tag and title — no "Critical Theory" label -->
+  <!-- Hero: safe framing -->
   <div class="hero-tag">Analytical Dashboard &nbsp;·&nbsp; Philosophy of Agency</div>
   <h1>Coherence &amp; <em>Agency</em></h1>
   <!-- CHANGE 1: Subtitle reframed around philosophical disagreements, not political movement -->
@@ -456,11 +456,162 @@
     </div>
   </div>
 
-  <div class="radar-box">
-    <p style="color:var(--accent); font-weight:700; font-family:'Arial',sans-serif; font-size:.85rem; text-transform:uppercase; letter-spacing:.08em;">Convergence Radar</p>
-    <p>Figure 1.0: Comparison of methodological priorities between formal critique and Coherence Ethics.</p>
+  <!-- Figure 1.0 — Radar Chart -->
+  <div class="radar-box" style="padding:28px 24px;">
+    <p style="color:var(--accent);font-weight:700;font-family:'Arial',sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;">Figure 1.0</p>
+    <p style="font-family:'Arial',sans-serif;font-size:.88rem;color:var(--muted);margin-bottom:20px;">Comparison of methodological priorities between formal critique and Coherence Ethics across seven dimensions.</p>
+    <!-- Legend -->
+    <div style="display:flex;gap:24px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-family:'Arial',sans-serif;font-size:.8rem;color:var(--muted);">
+        <div style="width:28px;height:3px;background:#4a9eff;border-radius:2px;"></div>
+        <span>Formal Critique Tradition</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'Arial',sans-serif;font-size:.8rem;color:var(--muted);">
+        <div style="width:28px;height:3px;background:#00c4a7;border-radius:2px;"></div>
+        <span>Coherence Ethics</span>
+      </div>
+    </div>
+    <svg id="radarChart" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;max-width:520px;display:block;margin:0 auto;">
+    </svg>
+    <!-- Dimension key -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:20px;">
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">① Critical Diagnosis</strong><br>Identifying structural sources of agency failure
+      </div>
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">② Constructive Design</strong><br>Building conditions that support agency
+      </div>
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">③ Biological Grounding</strong><br>Thermodynamic and embodied realism
+      </div>
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">④ Formal Architecture</strong><br>Precise multi-scale mathematical structure
+      </div>
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">⑤ Multi-Scale Analysis</strong><br>Micro / meso / macro integration
+      </div>
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">⑥ Repair Infrastructure</strong><br>Concrete tools for restoring agency
+      </div>
+      <div style="font-family:'Arial',sans-serif;font-size:.75rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:rgba(0,196,167,.04);">
+        <strong style="color:var(--accent);">⑦ Normative Content</strong><br>Ethical standards and emancipatory goals
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+// ── RADAR CHART ─────────────────────────────────────────────────────────────
+(function buildRadar(){
+  const svg = document.getElementById('radarChart');
+  if(!svg) return;
+
+  const cx=260, cy=210, R=150, sides=7;
+  const labels=['① Critical\nDiagnosis','② Constructive\nDesign','③ Biological\nGrounding','④ Formal\nArchitecture','⑤ Multi-Scale\nAnalysis','⑥ Repair\nInfrastructure','⑦ Normative\nContent'];
+
+  // Scores 0–10
+  const formal=[9,2,1,3,3,2,8];
+  const cohere=[8,9,9,9,9,9,8];
+
+  const rings=[2,4,6,8,10];
+  const ns='http://www.w3.org/2000/svg';
+
+  function pt(i,score){
+    const angle=(Math.PI*2/sides)*i - Math.PI/2;
+    const r=(score/10)*R;
+    return [cx+r*Math.cos(angle), cy+r*Math.sin(angle)];
+  }
+
+  // Grid rings
+  rings.forEach(r=>{
+    const pts=Array.from({length:sides},(_,i)=>pt(i,r));
+    const poly=document.createElementNS(ns,'polygon');
+    poly.setAttribute('points',pts.map(p=>p.join(',')).join(' '));
+    poly.setAttribute('fill','none');
+    poly.setAttribute('stroke','#1e3540');
+    poly.setAttribute('stroke-width','1');
+    svg.appendChild(poly);
+  });
+
+  // Spokes
+  for(let i=0;i<sides;i++){
+    const [x,y]=pt(i,10);
+    const line=document.createElementNS(ns,'line');
+    line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+    line.setAttribute('x2',x);  line.setAttribute('y2',y);
+    line.setAttribute('stroke','#1e3540');
+    line.setAttribute('stroke-width','1');
+    svg.appendChild(line);
+  }
+
+  // Data polygon helper
+  function drawPoly(data,color,fillOpacity){
+    const pts=data.map((_,i)=>pt(i,data[i]));
+    const poly=document.createElementNS(ns,'polygon');
+    poly.setAttribute('points',pts.map(p=>p.join(',')).join(' '));
+    poly.setAttribute('fill',color);
+    poly.setAttribute('fill-opacity',fillOpacity);
+    poly.setAttribute('stroke',color);
+    poly.setAttribute('stroke-width','2');
+    poly.setAttribute('stroke-linejoin','round');
+    svg.appendChild(poly);
+    // Dots
+    pts.forEach(([x,y])=>{
+      const c=document.createElementNS(ns,'circle');
+      c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','4');
+      c.setAttribute('fill',color); c.setAttribute('stroke','#0d1b1e'); c.setAttribute('stroke-width','1.5');
+      svg.appendChild(c);
+    });
+  }
+
+  drawPoly(formal,'#4a9eff',0.12);
+  drawPoly(cohere,'#00c4a7',0.18);
+
+  // Labels
+  labels.forEach((label,i)=>{
+    const angle=(Math.PI*2/sides)*i - Math.PI/2;
+    const r=R+34;
+    const x=cx+r*Math.cos(angle);
+    const y=cy+r*Math.sin(angle);
+    const lines=label.split('\n');
+    const g=document.createElementNS(ns,'g');
+    lines.forEach((line,j)=>{
+      const t=document.createElementNS(ns,'text');
+      t.setAttribute('x',x);
+      t.setAttribute('y',y + j*13 - (lines.length-1)*6);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('dominant-baseline','middle');
+      t.setAttribute('fill','#7a9a96');
+      t.setAttribute('font-family','Arial,sans-serif');
+      t.setAttribute('font-size','9.5');
+      t.setAttribute('font-weight',j===0?'700':'400');
+      if(j===0) t.setAttribute('fill','#00c4a7');
+      t.textContent=line;
+      g.appendChild(t);
+    });
+    svg.appendChild(g);
+  });
+
+  // Ring labels (2,4,6,8,10)
+  rings.forEach(r=>{
+    const t=document.createElementNS(ns,'text');
+    t.setAttribute('x',cx+4);
+    t.setAttribute('y',cy-(r/10)*R-4);
+    t.setAttribute('fill','#3a5a56');
+    t.setAttribute('font-family','Arial,sans-serif');
+    t.setAttribute('font-size','8');
+    t.textContent=r;
+    svg.appendChild(t);
+  });
+
+  // Center point
+  const dot=document.createElementNS(ns,'circle');
+  dot.setAttribute('cx',cx); dot.setAttribute('cy',cy); dot.setAttribute('r','3');
+  dot.setAttribute('fill','#1e3540');
+  svg.appendChild(dot);
+})();
+</script>
 
 <!-- ── SECTION 3: MULTI-SCALE ── -->
 <section class="section" id="scales">
