@@ -1,412 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ethics Beyond Boundaries — Course App Suite</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --teal:#0f766e;--teal-dark:#0d5e57;--teal-mid:#14b8a6;--teal-light:#ccfbf1;
-  --amber:#f59e0b;--amber-dark:#92400e;--amber-light:#fef3c7;
-  --navy:#1a2744;--ink:#1f2937;--muted:#6b7280;
-  --border:#e5e7eb;--paper:#f9fafb;
-  --sky:#1e3a8a;--sky-light:#dbeafe;
-  --green:#166534;--green-light:#dcfce7;
-  --red:#dc2626;--red-light:#fee2e2;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Cormorant Garamond','Georgia',serif;background:linear-gradient(135deg,#0a1628 0%,#112240 50%,#0a1628 100%);min-height:100vh;color:var(--ink)}
-.wrap{max-width:1000px;margin:0 auto;padding:1rem 1rem 3rem}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Phenomenological Veto | Coherence Ethics & Critical Theory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 
+    <!-- Chosen Palette: Philosophical Harmony -->
+    <!-- Primary Background: stone-50 (Neutral, calm ground) -->
+    <!-- Primary Text: slate-900 (Formal, legible) -->
+    <!-- Accents: indigo-700 (Logic/Formalism), rose-700 (Phenomenology/Human Element), amber-600 (Warning/Entropy) -->
+    -->
 
-/* HEADER */
-.site-header{text-align:center;padding:2.5rem 1rem 2rem;color:white}
-.site-header .label{font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:rgba(20,184,166,.75);margin-bottom:.5rem}
-.site-header h1{font-size:2.2rem;font-weight:700;color:white;margin-bottom:.4rem;line-height:1.15}
-.site-header .sub{font-size:1rem;color:rgba(255,255,255,.48);font-style:italic;margin-bottom:1rem}
-.site-header .desc{max-width:640px;margin:0 auto;font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.7}
+    <!-- 
+    <!-- Application Structure Plan: 
+         The SPA is organized as a persistent vertical navigation system with a central "Stage" for content. 
+         The architecture follows the essay's logic:
+         1. 'The Axiom': Introduces the Phenomenological Veto as the core resolution.
+         2. 'The Impasse': Maps the specific critiques of Adorno, Habermas, and Marcuse to Coherence Ethics parameters.
+         3. 'The Dual-Aspect Mirror': An interactive visualization of the Ice-Fire Equivalence.
+         4. 'The Constructor Basin': A simulation-style interface to visualize systemic entropy vs. agential capacity.
+         
+         The structure prioritizes the 'Veto' as the hierarchy-defining element, ensuring the user always feels the 'Subject' is in control of the 'Formalism'.
+    -->
 
-/* CHAPTER GROUPS */
-.chapter-group{margin-bottom:2rem}
-.group-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(20,184,166,.65);margin-bottom:.6rem;padding-left:.1rem}
-.app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem}
+    <!-- 
+    <!-- Visualization & Content Choices: 
+         - Radar Chart (Methodological Convergence): Goal - Show how your work balances Formalism and Emancipation compared to pure CT. Method - Chart.js Radar. 
+         - Interactive 'Veto' Panel: Goal - Demonstrate the transition from model-dominance to subject-dominance. Method - JS event handling toggling between "Instrumental Reason" and "Coherence Ethics" states.
+         - Multi-Variable Bubble Plot: Goal - Represent the 'Physics of Flourishing' (Entropy vs. Predictability). Method - Chart.js Bubble.
+         - Scale-Specific Detail Blocks: Goal - Map Micro/Meso/Macro scales to the specific theorists. Method - Tailwind-styled Flex cards.
+         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visual boundaries and icons created via CSS/HTML or Canvas. 
+    -->
 
-/* APP CARDS */
-.app-card{background:white;border-radius:.75rem;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.app-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
-.app-card-head{padding:.9rem 1.1rem .7rem;display:flex;align-items:flex-start;gap:.7rem}
-.app-card-icon{font-size:1.5rem;line-height:1;flex-shrink:0;margin-top:.1rem}
-.app-card-title{font-size:1rem;font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:.15rem}
-.app-card-type{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
-.app-card-body{padding:0 1.1rem .9rem;flex:1}
-.app-card-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
-.app-card-footer{padding:.55rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.app-card-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .5rem;border-radius:.25rem}
-.tag-case{background:var(--teal-light);color:var(--teal-dark)}
-.tag-companion{background:var(--sky-light);color:var(--sky)}
-.tag-simulation{background:var(--amber-light);color:var(--amber-dark)}
-.tag-reference{background:var(--paper);color:var(--muted);border:1px solid var(--border)}
-.tag-orientation{background:var(--green-light);color:var(--green)}
-.app-card-arrow{font-size:.9rem;color:var(--teal-mid)}
+    <!-- 
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    -->
 
-/* ACCENT BORDERS BY CHAPTER */
-.ch-orient .app-card-head{border-top:3px solid #0284c7}
-.ch-1 .app-card-head{border-top:3px solid #7c3aed}
-.ch-2 .app-card-head{border-top:3px solid #dc2626}
-.ch-3 .app-card-head{border-top:3px solid #0f766e}
-.ch-4 .app-card-head{border-top:3px solid #ca8a04}
-.ch-5 .app-card-head{border-top:3px solid #166534}
-.ch-6 .app-card-head{border-top:3px solid #0369a1}
-.ch-7 .app-card-head{border-top:3px solid #9333ea}
-.ch-8 .app-card-head{border-top:3px solid #92400e}
-.ch-9 .app-card-head{border-top:3px solid #0891b2}
-.ch-10 .app-card-head{border-top:3px solid #4f46e5}
-.ch-interlude .app-card-head{border-top:3px solid #0d5e57}
-.ch-rustbelt .app-card-head{border-top:3px solid #b45309}
-.ch-prologue .app-card-head{border-top:3px solid #6d28d9}
-.ch-11 .app-card-head{border-top:3px solid #0f766e}
-.ch-12 .app-card-head{border-top:3px solid #dc2626}
-.ch-13 .app-card-head{border-top:3px solid #1d4ed8}
-.ch-14 .app-card-head{border-top:3px solid #7c3aed}
-.ch-tools .app-card-head{border-top:3px solid #374151}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap');
 
-/* DIVIDER */
-.divider{height:1px;background:rgba(255,255,255,.07);margin:1.5rem 0}
+        :root {
+            --subject-color: #be123c; /* rose-700 */
+            --formal-color: #4338ca;  /* indigo-700 */
+        }
 
-/* PREDICTION CHAIN */
-.chain-bar{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:.65rem;padding:1rem 1.25rem;margin-bottom:1.5rem}
-.chain-bar h3{font-size:.75rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:rgba(20,184,166,.65);margin-bottom:.65rem}
-.chain-row{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-.chain-node{font-family:'JetBrains Mono',monospace;font-size:.65rem;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);padding:.22rem .55rem;border-radius:.3rem;white-space:nowrap}
-.chain-arrow{color:rgba(20,184,166,.5);font-size:.85rem}
-</style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* stone-50 */
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 1.5rem auto;
+            height: 400px;
+            max-height: 450px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .veto-active {
+            border: 3px solid var(--subject-color);
+            box-shadow: 0 0 20px rgba(190, 18, 60, 0.2);
+        }
+
+        .nav-active {
+            color: #111827;
+            border-left: 4px solid var(--subject-color);
+            background: #f1f5f9;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(231, 229, 228, 0.5);
+        }
+
+        /* Custom toggle switch for the 'Veto' */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; width: 26px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--subject-color); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        @media (max-width: 768px) {
+            .chart-container { height: 300px; }
+        }
+    </style>
 </head>
-<body>
-<div class="wrap">
+<body class="flex flex-col md:flex-row min-h-screen">
 
-<div class="site-header">
-  <div class="label">Saint Petersburg College &middot; Ethics Institute</div>
-  <h1>Ethics Beyond Boundaries</h1>
-  <div class="sub">Interactive App Suite &middot; Dr. Robert Mertzman</div>
-  <div class="desc">A complete set of simulation apps, case explorers, and companion reading tools for the EBB course. Each app connects to the UCP simulation engine and stores journal predictions for the next chapter.</div>
-</div>
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-stone-900 text-white p-4 sticky top-0 z-50 flex justify-between items-center">
+        <span class="serif text-xl font-bold italic">The Phenomenological Veto</span>
+        <button id="menu-toggle" class="text-2xl">&#9776;</button>
+    </header>
 
-<!-- PREDICTION CHAIN -->
-<div class="chain-bar">
-  <h3>Prediction Chain &mdash; Journal Q5 flows chapter to chapter</h3>
-  <div class="chain-row">
-    <span class="chain-node">Orientation → orient_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch2 → ch2_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch3 → ch3_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch4 → ch4_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch5 → ch5_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch6 → ch6_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch7 → ch7_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch8 → ch8_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Rust Belt → rust_belt_cq5</span>
-  </div>
-</div>
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="w-full md:w-72 bg-white border-r border-stone-200 flex flex-col fixed md:sticky top-0 h-screen z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+        <div class="p-8 border-b border-stone-100">
+            <h1 class="text-2xl font-bold text-slate-900 leading-tight">Coherence<br><span class="text-rose-700 italic">&</span> Critique</h1>
+            <p class="text-xs text-slate-500 mt-2 uppercase tracking-widest font-semibold">Analytical Dashboard</p>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto p-4 space-y-2">
+            <a href="#axiom" onclick="setActiveNav(this)" class="nav-link nav-active flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
+                <span class="mr-3">&#9883;</span> The Emancipatory Axiom
+            </a>
+            <a href="#impasse" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
+                <span class="mr-3">&#9879;</span> The Historical Impasse
+            </a>
+            <a href="#scales" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
+                <span class="mr-3">&#9723;</span> Multi-Scale Resolution
+            </a>
+            <a href="#physics" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
+                <span class="mr-3">&#9832;</span> Physics of Flourishing
+            </a>
+            <a href="#emancipation" onclick="setActiveNav(this)" class="nav-link flex items-center p-3 text-sm font-medium text-slate-600 hover:bg-stone-50 rounded-lg transition-all">
+                <span class="mr-3">&#9752;</span> Final Synthesis
+            </a>
+        </nav>
 
-<!-- ORIENTATION -->
-<div class="chapter-group ch-orient">
-  <div class="group-label">Orientation</div>
-  <div class="app-grid">
-    <a class="app-card" href="ebb-orientation-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🗺️</div><div><div class="app-card-title">Course Orientation</div><div class="app-card-type">Interactive Map</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The watershed model, PRF Peak Calculator, course arc, and Journal Q4 prediction for Chapter 2. Start here before Chapter 1.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-orientation">Orientation</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="day1-orientation.html">
-      <div class="app-card-head"><div class="app-card-icon">📋</div><div><div class="app-card-title">Day 1 Orientation</div><div class="app-card-type">First Class</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">First-day introduction to the course framework, PRF concept, and OS1/OS2 distinction.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-orientation">Day 1</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+        <div class="p-6 bg-stone-50 text-[10px] text-stone-400 border-t border-stone-100">
+            Based on: <em>The Phenomenological Veto in Coherence Ethics</em><br>
+            © 2024 Principia Agentialis Research
+        </div>
+    </aside>
 
-<!-- CHAPTER 1 -->
-<div class="chapter-group ch-1">
-  <div class="group-label">Chapter 1 &mdash; The PRF</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter1-lens-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🔭</div><div><div class="app-card-title">Your Interpretive Lens</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Build your Phenomenological Reference Framework. How your PRF formed, what it makes visible, and what it makes hard to see.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+    <!-- Main Content -->
+    <main class="flex-1 overflow-x-hidden">
+        
+        <!-- Section: The Axiom -->
+        <section id="axiom" class="min-h-screen p-6 md:p-12 lg:p-20 bg-stone-50">
+            <div class="max-w-4xl mx-auto">
+                <span class="text-rose-700 font-bold uppercase tracking-widest text-xs">Section 01</span>
+                <h2 class="text-4xl md:text-6xl font-bold text-slate-900 mt-4 mb-8">The Phenomenological Veto</h2>
+                
+                <p class="text-xl text-slate-700 leading-relaxed font-light mb-12">
+                    Critical Theory reaches a diagnostic dead-end when it assumes formal systems are inherently oppressive. Your work resolves this by asserting that the <strong>phenomenological experience of the real person</strong> is the ground truth. The math is the map; the person is the territory.
+                </p>
 
-<!-- CHAPTER 2 -->
-<div class="chapter-group ch-2">
-  <div class="group-label">Chapter 2 &mdash; The Challenger Disaster</div>
-  <div class="app-grid">
-    <a class="app-card" href="challenger-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🚀</div><div><div class="app-card-title">Challenger Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Roger Boisjoly and the suppression gap. Eight tabs: Discovery through Aftermath. UCP Simulation: Config A (Thiokol) vs. Config B (protected channel). Clickable metric explanations.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter2-telescope-app.html">
-      <div class="app-card-head"><div class="app-card-icon">📡</div><div><div class="app-card-title">Chapter 2 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The suppression gap concept, institutional architecture, and the ethics of speaking truth to power.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+                <!-- Interactive Veto Toggle -->
+                <div id="veto-module" class="bg-white p-8 rounded-2xl shadow-xl border border-stone-200 transition-all duration-500">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+                        <div>
+                            <h3 id="mode-title" class="text-2xl font-bold text-slate-800">Status: Instrumental Reason</h3>
+                            <p id="mode-desc" class="text-slate-500 text-sm">Subject is treated as a calculable input to be optimized.</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Apply Veto</span>
+                            <label class="switch">
+                                <input type="checkbox" id="veto-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
 
-<!-- CHAPTER 3 -->
-<div class="chapter-group ch-3">
-  <div class="group-label">Chapter 3 &mdash; Father Hanna</div>
-  <div class="app-grid">
-    <a class="app-card" href="hanna-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⛪</div><div><div class="app-card-title">Hanna Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Father Saad Sirop Hanna — maintaining identity under maximum institutional entropy. Identity Kernel, BioBond, and the limits of individual courage.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter3-commonwealth-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🏛️</div><div><div class="app-card-title">Chapter 3 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Building commonwealth across difference. The conditions for ethical functioning under extreme constraint.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-lg bg-stone-100 border border-stone-200" id="box-1">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Formalism</span>
+                            <p class="font-bold text-slate-800" id="text-1">System Master</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-stone-100 border border-stone-200" id="box-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Subject</span>
+                            <p class="font-bold text-slate-800" id="text-2">Reified Object</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-stone-100 border border-stone-200" id="box-3">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Method</span>
+                            <p class="font-bold text-slate-800" id="text-3">Domination</p>
+                        </div>
+                    </div>
+                </div>
 
-<!-- CHAPTER 4 -->
-<div class="chapter-group ch-4">
-  <div class="group-label">Chapter 4 &mdash; Wangari Maathai</div>
-  <div class="app-grid">
-    <a class="app-card" href="maathai-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🌳</div><div><div class="app-card-title">Maathai Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Wangari Maathai and the Green Belt Movement. Coordination architecture, OS2 Bridge, and building institutions that outlast their founders.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter4-maathai-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🌿</div><div><div class="app-card-title">Chapter 4 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Institutional design, capability-based coordination, and the ethics of building structures that distribute agency.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+                <div class="mt-12 p-6 border-l-4 border-rose-700 bg-rose-50 text-slate-800 italic">
+                    "Whenever there is a mismatch between lived experience and formal models, the formalism must be revised using the metaconstructive capabilities of the person."
+                </div>
+            </div>
+        </section>
 
-<!-- CHAPTER 5 -->
-<div class="chapter-group ch-5">
-  <div class="group-label">Chapter 5 &mdash; Nelson Mandela</div>
-  <div class="app-grid">
-    <a class="app-card" href="mandela-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⚖️</div><div><div class="app-card-title">Mandela Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Nelson Mandela and the TRC. Three simulation runs: the TRC design, the fragmentation counterfactual, and the vulnerable population test.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter5-mandela-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🕊️</div><div><div class="app-card-title">Chapter 5 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Truth, reconciliation, and institutional design across radical difference. The TRC as a coordination architecture problem.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+        <!-- Section: The Impasse -->
+        <section id="impasse" class="min-h-screen p-6 md:p-12 lg:p-20 bg-white">
+            <div class="max-w-4xl mx-auto">
+                <span class="text-indigo-700 font-bold uppercase tracking-widest text-xs">Section 02</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4 mb-12">The Historical Impasse</h2>
+                
+                <p class="text-lg text-slate-600 mb-12 leading-relaxed">
+                    How does Coherence Ethics interact with the giants of the Frankfurt School? We map their qualitative anxieties to your quantitative diagnostic tools.
+                </p>
 
-<!-- CHAPTER 6 -->
-<div class="chapter-group ch-6">
-  <div class="group-label">Chapter 6 &mdash; Tim Palmer</div>
-  <div class="app-grid">
-    <a class="app-card" href="palmer-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🌀</div><div><div class="app-card-title">Palmer Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Tim Palmer and ensemble forecasting. Single-model vs. ensemble architecture. The moral argument for honest uncertainty. Three simulation runs.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter6-companion.html">
-      <div class="app-card-head"><div class="app-card-icon">📊</div><div><div class="app-card-title">Chapter 6 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The primacy of doubt. Chaos, uncertainty, and the ethics of what forecasting institutions owe the people who depend on them.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Adorno / Horkheimer -->
+                    <div class="p-8 rounded-xl border border-stone-100 bg-stone-50 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-slate-900">Adorno & Horkheimer</h3>
+                            <span class="px-2 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded">1st Gen</span>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-6">Feared that mathematical abstraction flattened qualitative human differences into quantitative equivalences.</p>
+                        <div class="bg-white p-4 rounded-lg border border-stone-200">
+                            <p class="text-xs font-bold text-indigo-700 uppercase mb-2">Resolution</p>
+                            <p class="text-xs text-slate-500 italic">"The map is drawn in pencil." If the IPS diagnostic doesn't match the suffering, the math is judged wrong.</p>
+                        </div>
+                    </div>
 
-<!-- CHAPTER 7 -->
-<div class="chapter-group ch-7">
-  <div class="group-label">Chapter 7 &mdash; Doyne Farmer</div>
-  <div class="app-grid">
-    <a class="app-card" href="farmer-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🏭</div><div><div class="app-card-title">Farmer Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Doyne Farmer and agent-based economics. Three runs: Representative Agent, Heterogeneous Agents, Rawlsian Test. The COVID prediction and what standard models missed.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter7-farmer-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🔬</div><div><div class="app-card-title">Chapter 7 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The invisible people. Representative agent error, heterogeneous modeling, social block fields, and the Rawlsian test. Your field map exercise.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+                    <!-- Habermas -->
+                    <div class="p-8 rounded-xl border border-stone-100 bg-stone-50 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-slate-900">Jürgen Habermas</h3>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-[10px] font-bold rounded">2nd Gen</span>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-6">The System (money/power) colonizes the Lifeworld (meaning/empathy). Destruction of communicative infrastructure.</p>
+                        <div class="bg-white p-4 rounded-lg border border-stone-200">
+                            <p class="text-xs font-bold text-indigo-700 uppercase mb-2">Resolution</p>
+                            <p class="text-xs text-slate-500 italic">Formalism as a <strong>Shielding Mechanism</strong>. Using task-space matrices to protect the OS1 interiority from external entropy.</p>
+                        </div>
+                    </div>
+                </div>
 
-<!-- CHAPTER 8 -->
-<div class="chapter-group ch-8">
-  <div class="group-label">Chapter 8 &mdash; The Simulated History of Ethics</div>
-  <div class="app-grid">
-    <a class="app-card" href="ethical-theories-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🏛️</div><div><div class="app-card-title">Ethical Theories App</div><div class="app-card-type">Nine Stations + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">What were the traditions actually measuring? Nine stations from Socrates to Existentialism. Conditions Cascade visualization. Composite Run with all nine conditions. The Complex PRF.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+                <div class="mt-16">
+                    <h3 class="text-2xl font-bold text-center mb-8">Convergence Radar</h3>
+                    <div class="chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-slate-400 mt-4 italic">Figure 1.0: Comparison of methodological priorities between pure Critique and Coherence Ethics.</p>
+                </div>
+            </div>
+        </section>
 
-<!-- CHAPTER 9 -->
-<div class="chapter-group ch-9">
-  <div class="group-label">Chapter 9 &mdash; The World Values Map</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter9-wvm-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127758;</div><div><div class="app-card-title">Where Are You Standing?</div><div class="app-card-type">Cultural PRF &middot; Cross-Cultural Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The World Values Map applied to the simulation. Two axes, five worldview categories, the thermodynamic logic of why values shift with conditions, IPS-WVM connection, and AMC forward pointer.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+        <!-- Section: Multi-Scale Resolution -->
+        <section id="scales" class="min-h-screen p-6 md:p-12 lg:p-20 bg-slate-900 text-white">
+            <div class="max-w-5xl mx-auto">
+                <span class="text-rose-400 font-bold uppercase tracking-widest text-xs">Section 03</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-16">Multi-Scale Synthesis</h2>
 
-<!-- CHAPTER 10 -->
-<div class="chapter-group ch-10">
-  <div class="group-label">Chapter 10 &mdash; The Social Contract</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter10-social-contract-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#x2696;&#xFE0F;</div><div><div class="app-card-title">Who Gave Them the Right?</div><div class="app-card-type">Three Architectures &middot; IPS Profiles &middot; Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Hobbes, Locke, and Rousseau as institutional architectures mapped to IPS parameters. Characteristic failure mode per architecture. CPG five criteria as IPS requirements. The Hybrid Citizen framework.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+                <!-- Scale Interaction Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-slate-700 rounded-2xl overflow-hidden">
+                    <!-- Micro -->
+                    <div class="p-10 border-b md:border-b-0 md:border-r border-slate-700 hover:bg-slate-800 transition-colors">
+                        <h4 class="text-rose-400 font-bold text-sm uppercase mb-2">Micro-Scale (Subjective)</h4>
+                        <h3 class="text-2xl font-bold mb-4 font-serif italic">OS1 / PRF</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">The "Phenomenological Reference Frame." Where meaning is made and silence is trained. The ultimate territory of the veto.</p>
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-rose-500"></span> 1st Person Reality
+                        </div>
+                    </div>
+                    <!-- Meso -->
+                    <div class="p-10 border-b md:border-b-0 md:border-r border-slate-700 hover:bg-slate-800 transition-colors">
+                        <h4 class="text-indigo-400 font-bold text-sm uppercase mb-2">Meso-Scale (Substrate)</h4>
+                        <h3 class="text-2xl font-bold mb-4 font-serif italic">Agential Material</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">The biological and social support structures. Managing $S_{eff}$ scar burden to prevent cognitive collapse.</p>
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500"></span> BioBonds & Communities
+                        </div>
+                    </div>
+                    <!-- Macro -->
+                    <div class="p-10 hover:bg-slate-800 transition-colors">
+                        <h4 class="text-amber-400 font-bold text-sm uppercase mb-2">Macro-Scale (Institutional)</h4>
+                        <h3 class="text-2xl font-bold mb-4 font-serif italic">OS2 / Hamiltonian</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">The $H_{AB}$ interaction landscape. Engineering predictable institutions to secure the Temporal Commons.</p>
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span> Systemic Predictability
+                        </div>
+                    </div>
+                </div>
 
-<!-- INTERLUDE -->
-<div class="chapter-group ch-interlude">
-  <div class="group-label">Interlude &mdash; Ethics of the Framework</div>
-  <div class="app-grid">
-    <a class="app-card" href="interlude-ethics-framework-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#9651;</div><div><div class="app-card-title">Ethics of the Framework</div><div class="app-card-type">Agency Conditions Principle &middot; Bridge Reading</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The normative core stated in full: ACP, entropy-exporting institutions, Coherence-Preserving Governance, temporal commons, and the six-question diagnostic for the applied sequence ahead.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reading</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+                <div class="mt-16 bg-slate-800 p-8 rounded-xl border border-slate-700">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
+                        <span class="px-2 py-1 bg-rose-900 text-rose-100 text-xs rounded">Synthesis</span>
+                        The Ice-Fire Equivalence
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Lived Experience (First-Person) $\iff$ Thermodynamic Exchange (Third-Person). You prove that suffering isn't just a feeling—it's measurable metabolic effort in response to environmental entropy. This de-reifies social science by showing the math is just a mirror for the living process.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-<!-- RUST BELT -->
-<div class="chapter-group ch-rustbelt">
-  <div class="group-label">Rust Belt Case Study &mdash; Nine Lenses Applied</div>
-  <div class="app-grid">
-    <a class="app-card" href="rust-belt-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127981;</div><div><div class="app-card-title">Rust Belt &mdash; Nine Ethical Lenses</div><div class="app-card-type">Case Study + Three-Part Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The Rust Belt collapse examined through all nine ethical traditions simultaneously. Pre-collapse, collapse, and current state metrics. The synthesis tab shows what no single lens can see alone.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Study</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+        <!-- Section: Physics of Flourishing -->
+        <section id="physics" class="min-h-screen p-6 md:p-12 lg:p-20 bg-stone-50">
+            <div class="max-w-4xl mx-auto">
+                <span class="text-indigo-700 font-bold uppercase tracking-widest text-xs">Section 04</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4 mb-8">The Dynamics of Agency</h2>
+                
+                <p class="text-lg text-slate-600 mb-12">
+                    Adjust the systemic parameters to see how <strong>Dark Coherence Foreclosure</strong> (Marcuse's One-Dimensional Man) occurs when environmental noise overwhelms the subject's boundaries.
+                </p>
 
-<div class="divider"></div>
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-stone-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Systemic Entropy (Alienation)</label>
+                                <input type="range" id="entropy-slider" class="w-full accent-rose-700" min="0" max="100" value="75">
+                                <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                                    <span>Stable Lifeworld</span>
+                                    <span>High Extraction</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Predictability Ceiling ($FHRI_{max}$)</label>
+                                <input type="range" id="ceiling-slider" class="w-full accent-indigo-700" min="10" max="100" value="30">
+                                <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                                    <span>Bureaucratic Noise</span>
+                                    <span>Agential Shielding</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-center p-6 bg-stone-50 rounded-lg border border-stone-100">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">State Output</h4>
+                            <div id="state-label" class="text-2xl font-bold text-rose-700 mb-2 italic">Dark Foreclosure</div>
+                            <p id="state-analysis" class="text-xs text-slate-500 leading-relaxed">
+                                $B_{total} > dim(H_{AB})$. Entropic noise is collapsing the agent's cognitive horizon. Agency is reduced to short-term survival.
+                            </p>
+                        </div>
+                    </div>
 
-<!-- APPLIED SEQUENCE -->
-<div class="chapter-group ch-prologue">
-  <div class="group-label">Prologue &mdash; The Pattern Beneath Ethics</div>
-  <div class="app-grid">
-    <a class="app-card" href="prologue-pattern-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127381;</div><div><div class="app-card-title">The Pattern Beneath Ethics</div><div class="app-card-type">Scale-Free Laws &middot; Agential Hijacking &middot; Course Map</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The scale-invariant mechanism underlying every chapter: parasitic overwrite operating identically at biological, psychological, institutional, and civilizational scales. The mantis case. Course architecture revealed.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Prologue</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+                    <div class="chart-container">
+                        <canvas id="bubbleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="chapter-group ch-11">
-  <div class="group-label">Chapter 11 &mdash; Economic Systems (Applied Sequence &middot; Movement 1)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter11-economic-systems-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127970;</div><div><div class="app-card-title">What the Economy Does to Coherent Agency</div><div class="app-card-type">IPS Diagnostic &middot; BioBond &middot; Peterson et al. 2025</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The False Choice thesis. Nine fairness dimensions as IPS parameters. Florida nursing home ownership archetypes (Peterson/AARP 2025 &amp; CMS data). PE acquisition trajectory 2019&ndash;2024. BioBond instruments. True Solvency Accounting. Three economic architecture simulation configs.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation + IPS</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+        <!-- Section: Final Synthesis -->
+        <section id="emancipation" class="min-h-screen p-6 md:p-12 lg:p-20 bg-white">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="text-rose-700 font-bold uppercase tracking-widest text-xs">Conclusion</span>
+                <h2 class="text-5xl md:text-6xl font-bold text-slate-900 mt-6 mb-12">The Engineer of Emancipation</h2>
+                
+                <div class="serif text-2xl text-slate-700 italic leading-relaxed mb-16">
+                    "We are not merely adaptive agents inside an environment; we are metaconstructors capable of altering the very boundary conditions of our own adaptation."
+                </div>
 
-<div class="chapter-group ch-12">
-  <div class="group-label">Chapter 12 &mdash; Governance Systems (Applied Sequence &middot; Movement 2)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter12-governance-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127981;</div><div><div class="app-card-title">Governance Systems and the Routing Quality Gap</div><div class="app-card-type">Four Configs &middot; Boisjoly T4 &middot; Type 1/Type 2 Failure</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Procedural vs. substantive legitimacy. Config A (Captured), B (Coherence-Preserving), C (Reform Transition), D (Boisjoly T4: agent FHRI 82, absorbed 67.7 pts). Type 1 vs. Type 2 routing quality failure distinction.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+                <div class="text-left space-y-8 text-slate-600 leading-relaxed">
+                    <p>
+                        By integrating the <strong>Phenomenological Veto</strong>, your work transforms Coherence Ethics from a potentially technocratic framework into a genuinely emancipatory one. You solve the paralysis of Critical Theory—which often fears creating any positive system—by making the system explicitly <em>revisable</em> by its participants.
+                    </p>
+                    <p>
+                        The "Great Refusal" is no longer just a romantic instinct; it is formalized as a <strong>Constructor Basin Escape</strong>. It is the active building of alternative attractors where $FHRI_{max}$ is elevated through BioBonds and secured Temporal Commons.
+                    </p>
+                </div>
 
-<div class="chapter-group ch-13">
-  <div class="group-label">Chapter 13 &mdash; Information Systems (Applied Sequence &middot; Movement 3)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter13-infosystems-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#128225;</div><div><div class="app-card-title">Information Systems and the Second Filter</div><div class="app-card-type">Web of Acquisition &middot; &sigma;/&mu; Filter Asymmetry &middot; AI Ethics</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The filter upstream of governance. CSER Cambridge web of acquisition framework. IPS mechanism of filter asymmetry: &sigma; (morphic residue) and &mu; (incentive misalignment). Why 80% structural improvement is the honest result. Three simulation configs with IPS profiles.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+                <div class="mt-20 p-12 bg-slate-900 text-white rounded-3xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-bold mb-4">The Mandate</h3>
+                        <p class="text-slate-400 text-lg">Leave behind a future in which others can continue to become themselves.</p>
+                    </div>
+                    <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-rose-900/20 rounded-full blur-3xl"></div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<div class="chapter-group ch-14">
-  <div class="group-label">Chapter 14 &mdash; Existential Risk (Applied Sequence &middot; Movement 4)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter14-existential-risk-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127759;</div><div><div class="app-card-title">Existential Risk, Leverage, and the AMC</div><div class="app-card-type">IPS Field Profiles &middot; Iron Cage &middot; T1/T2 Counterfactuals</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Meadows leverage hierarchy. Iron Cage (high-&sigma;/&rho;) and Obsolescence Trap (high-&epsilon;/&mu;) failure modes. Four-institution IPS field profiles. Trust vector trajectory. T1 vs. T2 intervention types. Paris Agreement analysis. AMC as field architecture.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Multi-Institutional Field</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
+    <script>
+        // --- Navigation Logic ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
 
-<div class="divider"></div>
+        function setActiveNav(el) {
+            navLinks.forEach(link => link.classList.remove('nav-active'));
+            el.classList.add('nav-active');
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+            }
+        }
 
-<!-- REFERENCE TOOLS -->
-<div class="chapter-group ch-tools">
-  <div class="group-label">Reference Tools &amp; Labs</div>
-  <div class="app-grid">
-    <a class="app-card" href="ucp-metrics-reference.html">
-      <div class="app-card-head"><div class="app-card-icon">📐</div><div><div class="app-card-title">UCP Metrics Reference</div><div class="app-card-type">Technical Reference</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Complete technical documentation for every simulation metric: formulas, ranges, research grounding, and parameter interactions.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reference</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="ucp-student-guide.html">
-      <div class="app-card-head"><div class="app-card-icon">📖</div><div><div class="app-card-title">Student Guide</div><div class="app-card-type">How to Use the Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Plain-language guide to running simulations, reading metrics, and connecting results to the course concepts.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Guide</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="metrics-calibration-lab.html">
-      <div class="app-card-head"><div class="app-card-icon">🧪</div><div><div class="app-card-title">Metrics Calibration Lab</div><div class="app-card-type">Interactive Lab</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Hands-on parameter exploration. Adjust worldview distributions and evidence architectures and watch metrics respond in real time.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Lab</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="worldview-comparison.html">
-      <div class="app-card-head"><div class="app-card-icon">🌐</div><div><div class="app-card-title">Worldview Comparison</div><div class="app-card-type">Reference Tool</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Side-by-side comparison of the five worldview frameworks. What each sees, what each misses, and how they interact in the simulation.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reference</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="trans-temporal-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⏳</div><div><div class="app-card-title">Trans-Temporal Explorer</div><div class="app-card-type">Research Tool</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Generational transmission of coordination capacity. How institutional patterns propagate across time and what degrades or improves them.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Research</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="cte-challenge.html">
-      <div class="app-card-head"><div class="app-card-icon">🏈</div><div><div class="app-card-title">CTE Challenge</div><div class="app-card-type">Case Study</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The NFL's CTE crisis as a coordination failure case. Capability-based coordination in practice.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Study</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        });
 
-<div style="text-align:center;padding:2rem 0 1rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.2)">
-  Ethics Beyond Boundaries &middot; Saint Petersburg College &middot; Ethics Institute &middot; &copy; 2026
-</div>
+        // --- Veto Toggle Logic ---
+        const vetoToggle = document.getElementById('veto-toggle');
+        const modeTitle = document.getElementById('mode-title');
+        const modeDesc = document.getElementById('mode-desc');
+        const boxes = [document.getElementById('box-1'), document.getElementById('box-2'), document.getElementById('box-3')];
+        const texts = [document.getElementById('text-1'), document.getElementById('text-2'), document.getElementById('text-3')];
 
-</div>
+        vetoToggle.addEventListener('change', (e) => {
+            const isVeto = e.target.checked;
+            const module = document.getElementById('veto-module');
+            
+            if (isVeto) {
+                module.classList.add('veto-active');
+                modeTitle.innerText = "Status: Coherence Ethics";
+                modeTitle.classList.add('text-rose-700');
+                modeDesc.innerText = "Formalism is a tool; Phenomenological experience is the ultimate veto.";
+                texts[0].innerText = "Revisable Map";
+                texts[1].innerText = "Metaconstructor";
+                texts[2].innerText = "Emancipation";
+                boxes.forEach(b => b.classList.replace('bg-stone-100', 'bg-rose-50'));
+            } else {
+                module.classList.remove('veto-active');
+                modeTitle.innerText = "Status: Instrumental Reason";
+                modeTitle.classList.remove('text-rose-700');
+                modeDesc.innerText = "Subject is treated as a calculable input to be optimized.";
+                texts[0].innerText = "System Master";
+                texts[1].innerText = "Reified Object";
+                texts[2].innerText = "Domination";
+                boxes.forEach(b => b.classList.replace('bg-rose-50', 'bg-stone-100'));
+            }
+        });
+
+        // --- Charts Initialization ---
+        let radarInstance = null;
+        let bubbleInstance = null;
+
+        function initCharts() {
+            // Radar Chart
+            const radarCtx = document.getElementById('radarChart').getContext('2d');
+            radarInstance = new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Formal Math', 'Subjectivity', 'Social Justice', 'Thermodynamics', 'Political Econ', 'Agency Physics'],
+                    datasets: [{
+                        label: 'Critical Theory',
+                        data: [20, 95, 90, 15, 85, 40],
+                        backgroundColor: 'rgba(180, 83, 9, 0.2)',
+                        borderColor: 'rgba(180, 83, 9, 1)',
+                        pointBackgroundColor: 'rgba(180, 83, 9, 1)'
+                    }, {
+                        label: 'Coherence Ethics',
+                        data: [95, 90, 75, 98, 70, 95],
+                        backgroundColor: 'rgba(67, 56, 202, 0.2)',
+                        borderColor: 'rgba(67, 56, 202, 1)',
+                        pointBackgroundColor: 'rgba(67, 56, 202, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#e2e8f0' },
+                            ticks: { display: false },
+                            pointLabels: { font: { size: 10, weight: '600' } }
+                        }
+                    },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Bubble Chart
+            const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
+            bubbleInstance = new Chart(bubbleCtx, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: 'Current Agential Capacity',
+                        data: [{ x: 75, y: 30, r: 10 }],
+                        backgroundColor: 'rgba(190, 18, 60, 0.6)',
+                        borderColor: 'rgba(190, 18, 60, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Systemic Entropy', font: { weight: 'bold' } }, min: 0, max: 100 },
+                        y: { title: { display: true, text: 'Structural Predictability', font: { weight: 'bold' } }, min: 0, max: 100 }
+                    }
+                }
+            });
+        }
+
+        // --- Dynamics Simulation Logic ---
+        const entropySlider = document.getElementById('entropy-slider');
+        const ceilingSlider = document.getElementById('ceiling-slider');
+        const stateLabel = document.getElementById('state-label');
+        const stateAnalysis = document.getElementById('state-analysis');
+
+        function updateSimulation() {
+            const entropy = parseInt(entropySlider.value);
+            const ceiling = parseInt(ceilingSlider.value);
+            
+            // Calculate "Capacity" (Radius)
+            let capacity = (ceiling * 1.2) - (entropy * 0.7) + 20;
+            if (capacity < 5) capacity = 5;
+            
+            // Update Bubble
+            bubbleInstance.data.datasets[0].data[0] = { x: entropy, y: ceiling, r: capacity / 2 };
+            
+            // Logic for State Labels
+            if (entropy > 65 && ceiling < 45) {
+                stateLabel.innerText = "Dark Foreclosure";
+                stateLabel.style.color = "#be123c"; // rose-700
+                stateAnalysis.innerText = "$B_{total} > dim(H_{AB})$. High entropic noise is collapsing the agent's cognitive horizon. Agency is reduced to short-term survival (Marcuse).";
+                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(190, 18, 60, 0.6)';
+            } else if (ceiling > 70 && entropy < 40) {
+                stateLabel.innerText = "Agential Flourishing";
+                stateLabel.style.color = "#047857"; // emerald-700
+                stateAnalysis.innerText = "Predictable institutions and low entropy allow for the expansion of the temporal horizon. Emancipatory potential is realized.";
+                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(4, 120, 87, 0.6)';
+            } else if (ceiling > 70 && entropy > 70) {
+                stateLabel.innerText = "Rigid Domination";
+                stateLabel.style.color = "#b45309"; // amber-700
+                stateAnalysis.innerText = "High structure but high entropy (alienation). The system is highly predictable but purely extractive. (Instrumental Reason).";
+                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(180, 83, 9, 0.6)';
+            } else {
+                stateLabel.innerText = "Stochastic Struggle";
+                stateLabel.style.color = "#4338ca"; // indigo-700
+                stateAnalysis.innerText = "A state of constant boundary maintenance. Agency is possible but requires high metabolic effort ($S_{eff}$).";
+                bubbleInstance.data.datasets[0].backgroundColor = 'rgba(67, 56, 202, 0.6)';
+            }
+            
+            bubbleInstance.update();
+        }
+
+        entropySlider.addEventListener('input', updateSimulation);
+        ceilingSlider.addEventListener('input', updateSimulation);
+
+        // Run init
+        window.onload = () => {
+            initCharts();
+            updateSimulation();
+        };
+
+    </script>
 </body>
 </html>
